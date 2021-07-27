@@ -1,14 +1,16 @@
 #include <ncurses.h>
+#include <vector>
 #include "bar.h"
 
 int main() {
   initscr();
   curs_set(0);
 
-  Bar bars[5] = {Bar(17), Bar(9), Bar(12), Bar(16), Bar(6)};
+  std::vector<Bar> bars;
 
-  for(int i = 0; i < 5; i++) {
-    bars[i].draw(20, i);
+  for(int i = 0; i < 40; i++) {
+    bars.push_back(i);
+    bars[i].draw(40, i);
   }
 
   getch();
