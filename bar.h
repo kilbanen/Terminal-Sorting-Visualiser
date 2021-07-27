@@ -4,6 +4,11 @@ class Bar {
   public:
     int height;
     int maxHeight;
+
+    Bar() {
+      height = 0;
+      maxHeight = 0;
+    }
     
     Bar(int height, int maxHeight) {
       this->height = height;
