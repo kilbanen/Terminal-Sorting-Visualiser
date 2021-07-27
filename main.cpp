@@ -9,6 +9,22 @@ void swap(Bar *bars, int a, int b) {
   bars[b] = temp;
 }
 
+void selectionSort(Bar *bars, int size) {
+  for(int i = 0; i < size; i++) {
+    int min = i;
+    for(int j = i + 1; j < size; j++) {
+      if(bars[j].height < bars[min].height)
+        min = j;
+    }
+    if(min != i) {
+      swap(bars, min, i);
+      bars[min].draw(40, min);
+      bars[i].draw(40, i);
+      getch();
+    }
+  }
+}
+
 int main() {
   initscr();
   curs_set(0);
@@ -24,9 +40,7 @@ int main() {
 
   getch();
 
-  swap(bars, 0, 1);
-  bars[0].draw(40, 0);
-  bars[1].draw(40, 1);
+  selectionSort(bars, 40);
 
   getch();
   endwin();
