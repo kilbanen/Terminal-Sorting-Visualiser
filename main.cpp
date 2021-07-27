@@ -31,16 +31,16 @@ int main() {
 
   srand(time(0));
 
-  Bar bars[40];
+  Bar bars[80];
   
-  for(int i = 0; i < 40; i++) {
+  for(int i = 0; i < 80; i++) {
     bars[i] = Bar(rand() % 40, 40);
     bars[i].draw(40, i);
   }
 
   getch();
 
-  selectionSort(bars, 40);
+  selectionSort(bars, 80);
 
   getch();
   endwin();
