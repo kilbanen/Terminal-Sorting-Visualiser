@@ -3,9 +3,11 @@
 class Bar {
   public:
     int height;
+    int maxHeight;
     
-    Bar(int height) {
+    Bar(int height, int maxHeight) {
       this->height = height;
+      this->maxHeight = maxHeight;
     }
 
     void draw(int yPos, int xPos) {
@@ -15,5 +17,9 @@ class Bar {
         printw(" ");
       }
       attroff(A_STANDOUT);
+      for(int i = height; i < maxHeight; i++) {
+        move(yPos - i, xPos);
+        printw(" ");
+      }
     }
 };

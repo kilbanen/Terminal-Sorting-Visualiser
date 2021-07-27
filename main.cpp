@@ -11,11 +11,20 @@ int main() {
   srand(time(0));
 
   std::vector<Bar> bars;
-
+  
   for(int i = 0; i < 40; i++) {
-    bars.push_back(rand() % 40);
+    bars.push_back(Bar(rand() % 40, 40));
     bars[i].draw(40, i);
   }
+
+  getch();
+
+  Bar temp = bars[0];
+  bars[0] = bars[1];
+  bars[1] = temp;
+  
+  bars[0].draw(40, 0);
+  bars[1].draw(40, 1);
 
   getch();
   endwin();
