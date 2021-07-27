@@ -4,18 +4,21 @@ class Bar {
   public:
     int height;
     int maxHeight;
+    int yPos;
 
     Bar() {
       height = 0;
       maxHeight = 0;
+      yPos = 0;
     }
     
-    Bar(int height, int maxHeight) {
+    Bar(int height, int maxHeight, int yPos) {
       this->height = height;
       this->maxHeight = maxHeight;
+      this->yPos = yPos;
     }
 
-    void draw(int yPos, int xPos, int color) {
+    void draw(int xPos, int color) {
       attron(COLOR_PAIR(color));
       for(int i = 0; i < height; i++) {
         move(yPos - i, xPos);

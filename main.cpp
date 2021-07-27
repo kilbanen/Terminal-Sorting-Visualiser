@@ -13,22 +13,22 @@ void selectionSort(Bar *bars, int size) {
   for(int i = 0; i < size; i++) {
     int min = i;
     for(int j = i + 1; j < size; j++) {
-      bars[min].draw(40, min, 1);
-      bars[j].draw(40, j, 3);
+      bars[min].draw(min, 1);
+      bars[j].draw(j, 3);
       getch();
-      bars[j].draw(40, j, 1);
-      bars[min].draw(40, min, 3);
+      bars[j].draw(j, 1);
+      bars[min].draw(min, 3);
       getch();
       if(bars[j].height < bars[min].height) {
-        bars[min].draw(40, min, 1);
+        bars[min].draw(min, 1);
         min = j;
       }
     }
     if(min != i) {
       swap(bars, min, i);
-      bars[min].draw(40, min, 1);
+      bars[min].draw(min, 1);
     }
-    bars[i].draw(40, i, 2);
+    bars[i].draw(i, 2);
     getch();
   }
 }
@@ -45,16 +45,16 @@ int main() {
 
   srand(time(0));
 
-  Bar bars[80];
+  Bar bars[40];
   
-  for(int i = 0; i < 80; i++) {
-    bars[i] = Bar(rand() % 40, 40);
-    bars[i].draw(40, i, 1);
+  for(int i = 0; i < 40; i++) {
+    bars[i] = Bar(rand() % 40, 40, 40);
+    bars[i].draw(i, 1);
   }
 
   getch();
 
-  selectionSort(bars, 80);
+  selectionSort(bars, 40);
 
   getch();
   endwin();
