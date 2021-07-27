@@ -5,8 +5,11 @@ int main() {
   initscr();
   curs_set(0);
 
-  Bar bar(7);
-  bar.draw(5, 5);
+  Bar bars[5] = {Bar(17), Bar(9), Bar(12), Bar(16), Bar(6)};
+
+  for(int i = 0; i < 5; i++) {
+    bars[i].draw(20, i);
+  }
 
   getch();
   endwin();

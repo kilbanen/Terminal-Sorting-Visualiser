@@ -11,8 +11,8 @@ class Bar {
     void draw(int yPos, int xPos) {
       attron(A_STANDOUT);
       for(int i = 0; i < height; i++) {
-        move(yPos + i, xPos);
-        printw("%d", i);
+        move(yPos - i, xPos);
+        printw(" ");
       }
       attroff(A_STANDOUT);
     }
