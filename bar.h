@@ -15,13 +15,13 @@ class Bar {
       this->maxHeight = maxHeight;
     }
 
-    void draw(int yPos, int xPos) {
-      attron(A_STANDOUT);
+    void draw(int yPos, int xPos, int color) {
+      attron(COLOR_PAIR(color));
       for(int i = 0; i < height; i++) {
         move(yPos - i, xPos);
         printw(" ");
       }
-      attroff(A_STANDOUT);
+      attroff(COLOR_PAIR(color));
       for(int i = height; i < maxHeight; i++) {
         move(yPos - i, xPos);
         printw(" ");

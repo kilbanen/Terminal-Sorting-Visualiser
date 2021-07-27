@@ -18,16 +18,20 @@ void selectionSort(Bar *bars, int size) {
     }
     if(min != i) {
       swap(bars, min, i);
-      bars[min].draw(40, min);
-      bars[i].draw(40, i);
-      getch();
+      bars[min].draw(40, min, 1);
     }
+    bars[i].draw(40, i, 2);
+    getch();
   }
 }
 
 int main() {
   initscr();
   curs_set(0);
+  start_color();
+
+  init_pair(1, COLOR_BLACK, COLOR_WHITE);
+  init_pair(2, COLOR_BLACK, COLOR_MAGENTA);
 
   srand(time(0));
 
@@ -35,7 +39,7 @@ int main() {
   
   for(int i = 0; i < 80; i++) {
     bars[i] = Bar(rand() % 40, 40);
-    bars[i].draw(40, i);
+    bars[i].draw(40, i, 1);
   }
 
   getch();
