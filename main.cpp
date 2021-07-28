@@ -35,12 +35,16 @@ void selectionSort(Bar *bars, int size) {
 
 void insertionSort(Bar *bars, int size) {
   for(int i = 1; i < size; i++) {
-    for(int j = i; j > 0 && bars[j].height < bars[j - 1].height; j--) {
+    bars[i - 1].draw(i - 1, 1);
+    int j;
+    for(j = i; j > 0 && bars[j].height < bars[j - 1].height; j--) {
       swap(bars, j, j - 1);
       bars[j].draw(j, 1);
-      bars[j - 1].draw(j - 1 , 1);
+      bars[j - 1].draw(j - 1 , 3);
+      bars[i].draw(i, 2);
       getch();
     }
+    bars[j].draw(j, 1);
   }
 }
 
