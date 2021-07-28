@@ -34,15 +34,12 @@ void selectionSort(Bar *bars, int size) {
   for(int i = 0; i < size; i++) {
     int min = i;
     for(int j = i + 1; j < size; j++) {
-      if(isLessThan(bars, j, min)) {
+      if(isLessThan(bars, j, min))
         min = j;
-      }
     }
-    if(min != i) {
+    if(min != i)
       swap(bars, min, i);
-    }
     bars[i].draw(i, 2);
-    getch();
   }
 }
 
@@ -78,8 +75,8 @@ int main() {
 
   getch();
 
-  //selectionSort(bars, 40);
-  insertionSort(bars, 40);
+  selectionSort(bars, 40);
+  //insertionSort(bars, 40);
 
   getch();
   endwin();
