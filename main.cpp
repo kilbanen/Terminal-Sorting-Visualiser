@@ -7,19 +7,24 @@ void swap(Bar *bars, int a, int b) {
   Bar temp = bars[a];
   bars[a] = bars[b];
   bars[b] = temp;
+  int oldAColour = bars[a].colour;
+  int oldBColour = bars[b].colour;
   bars[a].draw(a, 3);
   bars[b].draw(b, 3);
   getch();
+  bars[a].draw(a, oldBColour);
+  bars[b].draw(b, oldAColour);
 }
 
 int isLessThan(Bar *bars, int a, int b) {
+  int oldAColour = bars[a].colour;
+  int oldBColour = bars[b].colour;
   bars[b].draw(b, 3);
-  bars[a].draw(a, 1);
   getch();
   bars[a].draw(a, 3);
   getch();
-  bars[b].draw(b, 1);
-  bars[a].draw(a, 1);
+  bars[a].draw(a, oldAColour);
+  bars[b].draw(b, oldBColour);
   if(bars[a].height < bars[b].height)
     return 1;
   return 0;
@@ -30,13 +35,11 @@ void selectionSort(Bar *bars, int size) {
     int min = i;
     for(int j = i + 1; j < size; j++) {
       if(isLessThan(bars, j, min)) {
-        bars[min].draw(min, 1);
         min = j;
       }
     }
     if(min != i) {
       swap(bars, min, i);
-      bars[min].draw(min, 1);
     }
     bars[i].draw(i, 2);
     getch();
@@ -45,15 +48,12 @@ void selectionSort(Bar *bars, int size) {
 
 void insertionSort(Bar *bars, int size) {
   for(int i = 1; i < size; i++) {
-    bars[i - 1].draw(i - 1, 1);
+    bars[i].draw(i, 2);
     int j;
     for(j = i; j > 0 && isLessThan(bars, j, j - 1); j--) {
       swap(bars, j, j - 1);
-      bars[j].draw(j, 1);
-      bars[j - 1].draw(j - 1, 1);
-      bars[i].draw(i, 2);
     }
-    bars[j].draw(j, 1);
+    bars[i].draw(i, 1);
   }
 }
 
@@ -73,7 +73,7 @@ int main() {
   
   for(int i = 0; i < 40; i++) {
     bars[i] = Bar(rand() % 40, 40, 40);
-    bars[i].draw(i, 1);
+    bars[i].draw(i);
   }
 
   getch();
