@@ -54,6 +54,15 @@ void insertionSort(Bar *bars, int size) {
   }
 }
 
+void bubbleSort(Bar *bars, int size) {
+  for(int i = 1; i < size; i++) {
+    for(int j = 0; j < size - i; j++) {
+      if(isLessThan(bars, j + 1, j))
+        swap(bars, j + 1, j);
+    }
+  }
+}
+
 int main() {
   initscr();
   curs_set(0);
@@ -75,8 +84,9 @@ int main() {
 
   getch();
 
-  selectionSort(bars, 40);
+  //selectionSort(bars, 40);
   //insertionSort(bars, 40);
+  bubbleSort(bars, 40);
 
   getch();
   endwin();
