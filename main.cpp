@@ -33,6 +33,17 @@ void selectionSort(Bar *bars, int size) {
   }
 }
 
+void insertionSort(Bar *bars, int size) {
+  for(int i = 1; i < size; i++) {
+    for(int j = i; j > 0 && bars[j].height < bars[j - 1].height; j--) {
+      swap(bars, j, j - 1);
+      bars[j].draw(j, 1);
+      bars[j - 1].draw(j - 1 , 1);
+      getch();
+    }
+  }
+}
+
 int main() {
   initscr();
   curs_set(0);
@@ -54,7 +65,8 @@ int main() {
 
   getch();
 
-  selectionSort(bars, 40);
+  //selectionSort(bars, 40);
+  insertionSort(bars, 40);
 
   getch();
   endwin();
