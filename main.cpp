@@ -85,11 +85,16 @@ int main() {
     bars[i].draw();
   }
 
-  getch();
-
-  selectionSort(bars, 40);
-  //insertionSort(bars, 40);
-  //bubbleSort(bars, 40);
+  switch(getch()) {
+  case 's':
+    selectionSort(bars, 40);
+    break;
+  case 'i':
+    insertionSort(bars, 40);
+    break;
+  default:
+    bubbleSort(bars, 40);
+  }
 
   getch();
   endwin();
