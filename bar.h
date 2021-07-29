@@ -5,23 +5,26 @@ class Bar {
     int height;
     int maxHeight;
     int yPos;
+    int xPos;
     int colour;
 
     Bar() {
       height = 0;
       maxHeight = 0;
       yPos = 0;
+      xPos = 0;
       colour = 1;
     }
     
-    Bar(int height, int maxHeight, int yPos) {
+    Bar(int height, int maxHeight, int yPos, int xPos) {
       this->height = height;
       this->maxHeight = maxHeight;
       this->yPos = yPos;
+      this->xPos = xPos;
       colour = 1;
     }
 
-    void draw(int xPos) {
+    void draw() {
       attron(COLOR_PAIR(colour));
       for(int i = 0; i < height; i++) {
         move(yPos - i, xPos);
@@ -34,8 +37,8 @@ class Bar {
       }
     }
 
-    void draw(int xPos, int colour) {
+    void draw(int colour) {
       this->colour = colour;
-      draw(xPos);
+      draw();
     }
 };
