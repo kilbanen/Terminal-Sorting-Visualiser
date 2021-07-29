@@ -19,16 +19,16 @@ void swap(Bar *a, Bar *b) {
   b->draw(oldAColour);
 }
 
-int isLessThan(Bar *bars, int a, int b) {
-  int oldAColour = bars[a].colour;
-  int oldBColour = bars[b].colour;
-  bars[b].draw(3);
+int isLessThan(Bar *a, Bar *b) {
+  int oldAColour = a->colour;
+  int oldBColour = b->colour;
+  b->draw(3);
   getch();
-  bars[a].draw(3);
+  a->draw(3);
   getch();
-  bars[a].draw(oldAColour);
-  bars[b].draw(oldBColour);
-  if(bars[a].height < bars[b].height)
+  a->draw(oldAColour);
+  b->draw(oldBColour);
+  if(a->height < b->height)
     return 1;
   return 0;
 }
@@ -37,7 +37,7 @@ void selectionSort(Bar *bars, int size) {
   for(int i = 0; i < size; i++) {
     int min = i;
     for(int j = i + 1; j < size; j++) {
-      if(isLessThan(bars, j, min))
+      if(isLessThan(&bars[j], &bars[min]))
         min = j;
     }
     if(min != i)
@@ -50,7 +50,7 @@ void insertionSort(Bar *bars, int size) {
   for(int i = 1; i < size; i++) {
     bars[i].draw(2);
     int j;
-    for(j = i; j > 0 && isLessThan(bars, j, j - 1); j--) {
+    for(j = i; j > 0 && isLessThan(&bars[j], &bars[j - 1]); j--) {
       swap(&bars[j], &bars[j - 1]);
     }
     bars[i].draw(1);
@@ -60,7 +60,7 @@ void insertionSort(Bar *bars, int size) {
 void bubbleSort(Bar *bars, int size) {
   for(int i = 1; i < size; i++) {
     for(int j = 0; j < size - i; j++) {
-      if(isLessThan(bars, j + 1, j))
+      if(isLessThan(&bars[j + 1], &bars[j]))
         swap(&bars[j + 1], &bars[j]);
     }
   }
@@ -87,9 +87,9 @@ int main() {
 
   getch();
 
-  //selectionSort(bars, 40);
+  selectionSort(bars, 40);
   //insertionSort(bars, 40);
-  bubbleSort(bars, 40);
+  //bubbleSort(bars, 40);
 
   getch();
   endwin();
