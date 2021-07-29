@@ -76,24 +76,32 @@ int main() {
   init_pair(2, COLOR_BLACK, COLOR_MAGENTA);
   init_pair(3, COLOR_BLACK, COLOR_RED);
 
+  int yMax, xMax, yBeg, xBeg;
+  getmaxyx(stdscr, yMax, xMax);
+
+  WINDOW *win = newwin(yMax / 2, xMax / 2, yMax / 4, xMax / 4);
+  box(win, 0, 0);
+  refresh();
+  wrefresh(win);
+
   srand(time(0));
 
-  Bar bars[40];
+  Bar bars[xMax / 2 - 2];
   
-  for(int i = 0; i < 40; i++) {
-    bars[i] = Bar(rand() % 40, 40, 40, i);
+  for(int i = 0; i < xMax / 2 - 2; i++) {
+    bars[i] = Bar((rand() % (yMax / 2 - 2)) + 1, yMax / 2 - 2, yMax / 4 * 3 - 2 , xMax / 4 + i + 1);
     bars[i].draw();
   }
 
   switch(getch()) {
   case 's':
-    selectionSort(bars, 40);
+    selectionSort(bars, xMax / 2 - 2);
     break;
   case 'i':
-    insertionSort(bars, 40);
+    insertionSort(bars, xMax / 2 - 2);
     break;
   default:
-    bubbleSort(bars, 40);
+    bubbleSort(bars, xMax / 2 - 2);
   }
 
   getch();
