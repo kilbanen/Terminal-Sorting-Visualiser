@@ -78,30 +78,34 @@ int main() {
 
   int yMax, xMax, yBeg, xBeg;
   getmaxyx(stdscr, yMax, xMax);
+  int windowHeight = yMax / 2;
+  int windowWidth = xMax / 2;
+  int windowY = yMax / 4;
+  int windowX = xMax /4;
 
-  WINDOW *win = newwin(yMax / 2, xMax / 2, yMax / 4, xMax / 4);
+  WINDOW *win = newwin(windowHeight, windowWidth, windowY, windowX);
   box(win, 0, 0);
   refresh();
   wrefresh(win);
 
   srand(time(0));
 
-  Bar bars[xMax / 2 - 2];
+  Bar bars[windowWidth - 2];
   
-  for(int i = 0; i < xMax / 2 - 2; i++) {
-    bars[i] = Bar((rand() % (yMax / 2 - 2)) + 1, yMax / 2 - 2, yMax / 4 * 3 - 2 , xMax / 4 + i + 1);
+  for(int i = 0; i < windowWidth - 2; i++) {
+    bars[i] = Bar((rand() % (windowHeight - 2)) + 1, windowHeight - 2, windowY + windowHeight - 2 , windowX + i + 1);
     bars[i].draw();
   }
 
   switch(getch()) {
   case 's':
-    selectionSort(bars, xMax / 2 - 2);
+    selectionSort(bars, windowWidth - 2);
     break;
   case 'i':
-    insertionSort(bars, xMax / 2 - 2);
+    insertionSort(bars, windowWidth - 2);
     break;
   default:
-    bubbleSort(bars, xMax / 2 - 2);
+    bubbleSort(bars, windowWidth - 2);
   }
 
   getch();
