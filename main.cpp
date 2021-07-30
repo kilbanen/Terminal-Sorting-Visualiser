@@ -76,7 +76,7 @@ int main() {
   init_pair(2, COLOR_BLACK, COLOR_MAGENTA);
   init_pair(3, COLOR_BLACK, COLOR_RED);
 
-  int yMax, xMax, yBeg, xBeg;
+  int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
   int windowHeight = yMax / 2;
   int windowWidth = xMax / 2;
