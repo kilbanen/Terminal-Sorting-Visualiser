@@ -74,6 +74,7 @@ void merge(Bar *bars, int low, int mid, int high) {
   int k = 0;
 
   bars[low].draw(2);
+  bars[mid].draw(2);
   bars[high].draw(2);
 
   while(i <= mid && j <= high) {
@@ -90,17 +91,18 @@ void merge(Bar *bars, int low, int mid, int high) {
     aux[k++] = bars[j++];
 
 
-  for(k = 0; k <= high - low; k++) {
-    bars[low + k] = aux[k];
-    bars[low + k].xPos = low + k;
-    if(k == 0 || k == high - low)
-      bars[low + k].draw(2);
+  for(i = low; i <= high; i++) {
+    bars[i] = aux[i - low];
+    bars[i].xPos = i;
+    if(i == low || i == mid || i == high)
+      bars[i].draw(2);
     else
-      bars[low + k].draw(1);
+      bars[i].draw(1);
     getch();
   }
 
   bars[low].draw(1);
+  bars[mid].draw(1);
   bars[high].draw(1);
 }
 
