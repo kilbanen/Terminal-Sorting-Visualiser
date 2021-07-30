@@ -73,6 +73,9 @@ void merge(Bar *bars, int low, int mid, int high) {
   int j = mid + 1;
   int k = 0;
 
+  bars[low].draw(2);
+  bars[high].draw(2);
+
   while(i <= mid && j <= high) {
     if(isLessThan(&bars[i], &bars[j]))
       aux[k++] = bars[i++];
@@ -86,12 +89,19 @@ void merge(Bar *bars, int low, int mid, int high) {
   while(j <= high)
     aux[k++] = bars[j++];
 
+
   for(k = 0; k <= high - low; k++) {
     bars[low + k] = aux[k];
     bars[low + k].xPos = low + k;
-    bars[low + k].draw();
+    if(k == 0 || k == high - low)
+      bars[low + k].draw(2);
+    else
+      bars[low + k].draw(1);
     getch();
   }
+
+  bars[low].draw(1);
+  bars[high].draw(1);
 }
 
 void mergeSort(Bar *bars, int low, int high) {
@@ -112,7 +122,6 @@ int main() {
   init_pair(1, COLOR_BLACK, COLOR_WHITE);
   init_pair(2, COLOR_BLACK, COLOR_MAGENTA);
   init_pair(3, COLOR_BLACK, COLOR_RED);
-  init_pair(4, COLOR_BLACK, COLOR_GREEN);
 
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
