@@ -66,6 +66,43 @@ void bubbleSort(Bar *bars, int size) {
   }
 }
 
+void merge(Bar *bars, int low, int mid, int high) {
+  Bar aux[high - low + 1];
+
+  int i = low;
+  int j = mid + 1;
+  int k = 0;
+
+  while(i <= mid && j <= high) {
+    if(isLessThan(&bars[i], &bars[j]))
+      aux[k++] = bars[i++];
+    else
+      aux[k++] = bars[j++];
+  }
+
+  while(i <= mid)
+    aux[k++] = bars[i++];
+
+  while(j <= high)
+    aux[k++] = bars[j++];
+
+  for(k = 0; k <= high - low; k++) {
+    bars[low + k] = aux[k];
+    bars[low + k].xPos = low + k;
+    bars[low + k].draw();
+    getch();
+  }
+}
+
+void mergeSort(Bar *bars, int low, int high) {
+  if(low < high) {
+    int mid = low + (high - low) / 2;
+    mergeSort(bars, low, mid);
+    mergeSort(bars, mid + 1, high);
+    merge(bars, low, mid, high);
+  }
+}
+
 int main() {
   initscr();
   curs_set(0);
@@ -75,13 +112,14 @@ int main() {
   init_pair(1, COLOR_BLACK, COLOR_WHITE);
   init_pair(2, COLOR_BLACK, COLOR_MAGENTA);
   init_pair(3, COLOR_BLACK, COLOR_RED);
+  init_pair(4, COLOR_BLACK, COLOR_GREEN);
 
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
   int windowHeight = yMax / 2;
   int windowWidth = xMax / 2;
   int windowY = yMax / 4;
-  int windowX = xMax /4;
+  int windowX = xMax / 4;
 
   WINDOW *win = newwin(windowHeight, windowWidth, windowY, windowX);
   box(win, 0, 0);
@@ -93,7 +131,7 @@ int main() {
   Bar bars[windowWidth - 2];
   
   for(int i = 0; i < windowWidth - 2; i++) {
-    bars[i] = Bar((rand() % (windowHeight - 2)) + 1, windowHeight - 2, windowY + windowHeight - 2 , windowX + i + 1);
+    bars[i] = Bar((rand() % (windowHeight - 2)) + 1, windowHeight - 2, windowY + windowHeight - 2 , i, windowX + 1);
     bars[i].draw();
   }
 
@@ -104,8 +142,11 @@ int main() {
   case 'i':
     insertionSort(bars, windowWidth - 2);
     break;
-  default:
+  case 'b':
     bubbleSort(bars, windowWidth - 2);
+    break;
+  default:
+    mergeSort(bars, 0, windowWidth - 3);
   }
 
   getch();
