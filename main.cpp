@@ -114,6 +114,28 @@ void mergeSort(Bar *bars, int low, int high) {
   }
 }
 
+int partition(Bar *bars, int low, int high) {
+  Bar pivot = bars[high];
+  int i = low - 1;
+  for(int j = low; j <= high; j++) {
+    if(!isLessThan(&pivot, &bars[j])) {
+      i++;
+      swap(&bars[i], &bars[j]);
+    }
+  }
+  return i;
+}
+
+void quickSort(Bar *bars, int low, int high) {
+  if(low >= 0 && high >= 0) {
+    if(low < high) {
+      int p = partition(bars, low, high);
+      quickSort(bars, low, p - 1);
+      quickSort(bars, p + 1, high);
+    }
+  }
+}
+
 int main() {
   initscr();
   curs_set(0);
@@ -156,8 +178,10 @@ int main() {
   case 'b':
     bubbleSort(bars, windowWidth - 2);
     break;
-  default:
+  case 'm':
     mergeSort(bars, 0, windowWidth - 3);
+  default:
+    quickSort(bars, 0, windowWidth - 3);
   }
 
   getch();
