@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <ctime>
 #include <cstdlib>
+#include <string>
 #include "bar.h"
 
 void swap(Bar *a, Bar *b) {
@@ -147,6 +148,18 @@ int main() {
   init_pair(3, COLOR_BLACK, COLOR_RED);
   init_pair(4, COLOR_BLACK, COLOR_CYAN);
 
+  std::string algorithms[] = {"Selection Sort", "Insertion Sort", "Bubble Sort", "Merge Sort", "Quick Sort"};
+  int ch, i = 0, width = 14;
+  WINDOW * menu = newwin( 10, 20, 1, 1 );
+  box(menu, 0, 0);
+  for(i = 0; i < 5; i++) {
+    mvwprintw( menu, i+1, 2, "%s", algorithms[i].c_str());
+  }
+  refresh();
+  wrefresh(menu);
+
+  getch();
+
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
   int windowHeight = yMax / 2;
@@ -180,6 +193,7 @@ int main() {
     break;
   case 'm':
     mergeSort(bars, 0, windowWidth - 3);
+    break;
   default:
     quickSort(bars, 0, windowWidth - 3);
   }
