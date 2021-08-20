@@ -149,16 +149,39 @@ int main() {
   init_pair(4, COLOR_BLACK, COLOR_CYAN);
 
   std::string algorithms[] = {"Selection Sort", "Insertion Sort", "Bubble Sort", "Merge Sort", "Quick Sort"};
-  int ch, i = 0, width = 14;
+  int ch, i, width = 14;
   WINDOW * menu = newwin( 10, 20, 1, 1 );
   box(menu, 0, 0);
   for(i = 0; i < 5; i++) {
-    mvwprintw( menu, i+1, 2, "%s", algorithms[i].c_str());
+    if( i == 0 ) 
+      wattron(menu, A_STANDOUT);
+    else
+      wattroff(menu, A_STANDOUT);
+    mvwprintw(menu, i+1, 2, "%s", algorithms[i].c_str());
   }
   refresh();
   wrefresh(menu);
-
-  getch();
+  i = 0;
+  keypad(menu, TRUE);
+  while(( ch = wgetch(menu)) != '\n'){
+    mvwprintw(menu, i+1, 2, "%s", algorithms[i].c_str());
+    switch(ch) {
+    case KEY_UP:
+      i--;
+      if(i < 0)
+        i = 4;
+      break;
+    case KEY_DOWN:
+      i++;
+      if(i > 4)
+        i = 0;
+      break;
+    }
+    wattron(menu, A_STANDOUT);
+    mvwprintw( menu, i+1, 2, "%s", algorithms[i].c_str());
+    wattroff(menu, A_STANDOUT);
+  }
+  delwin(menu);
 
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
