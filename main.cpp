@@ -198,26 +198,27 @@ int main() {
   srand(time(0));
 
   Bar bars[windowWidth - 2];
+  int algorithmIndex = i;
   
   for(int i = 0; i < windowWidth - 2; i++) {
     bars[i] = Bar((rand() % (windowHeight - 2)) + 1, windowHeight - 2, windowY + windowHeight - 2 , i, windowX + 1);
     bars[i].draw();
   }
 
-  switch(getch()) {
-  case 's':
+  switch(algorithmIndex) {
+  case 0:
     selectionSort(bars, windowWidth - 2);
     break;
-  case 'i':
+  case 1:
     insertionSort(bars, windowWidth - 2);
     break;
-  case 'b':
+  case 2:
     bubbleSort(bars, windowWidth - 2);
     break;
-  case 'm':
+  case 3:
     mergeSort(bars, 0, windowWidth - 3);
     break;
-  default:
+  case 4:
     quickSort(bars, 0, windowWidth - 3);
   }
 
