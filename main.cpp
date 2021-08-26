@@ -187,7 +187,6 @@ int main() {
     mvwprintw( menu, i+1, 2, "%s", algorithms[i].c_str());
     wattroff(menu, A_STANDOUT);
   }
-  delwin(menu);
 
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
@@ -210,6 +209,47 @@ int main() {
     bars[i] = Bar((rand() % (windowHeight - 2)) + 1, windowHeight - 2, windowY + windowHeight - 2 , i, windowX + 1);
     bars[i].draw();
   }
+
+  switch(algorithmIndex) {
+  case 0:
+    selectionSort(bars, windowWidth - 2);
+    break;
+  case 1:
+    insertionSort(bars, windowWidth - 2);
+    break;
+  case 2:
+    bubbleSort(bars, windowWidth - 2);
+    break;
+  case 3:
+    mergeSort(bars, 0, windowWidth - 3);
+    break;
+  case 4:
+    quickSort(bars, 0, windowWidth - 3);
+    break;
+  case 5:
+    shuffle(bars, windowWidth - 2);
+  }
+
+  while(( ch = wgetch(menu)) != '\n'){
+    mvwprintw(menu, i+1, 2, "%s", algorithms[i].c_str());
+    switch(ch) {
+    case KEY_UP:
+      i--;
+      if(i < 0)
+        i = 5;
+      break;
+    case KEY_DOWN:
+      i++;
+      if(i > 5)
+        i = 0;
+      break;
+    }
+    wattron(menu, A_STANDOUT);
+    mvwprintw( menu, i+1, 2, "%s", algorithms[i].c_str());
+    wattroff(menu, A_STANDOUT);
+  }
+
+  algorithmIndex = i;
 
   switch(algorithmIndex) {
   case 0:
