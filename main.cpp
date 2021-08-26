@@ -137,6 +137,12 @@ void quickSort(Bar *bars, int low, int high) {
   }
 }
 
+void shuffle(Bar *bars, int size) {
+  srand(time(0));
+  for(int i = 0; i < size; i++)
+    swap(&bars[rand() % size], &bars[rand() % size]);
+}
+
 int main() {
   initscr();
   curs_set(0);
@@ -148,11 +154,11 @@ int main() {
   init_pair(3, COLOR_BLACK, COLOR_RED);
   init_pair(4, COLOR_BLACK, COLOR_CYAN);
 
-  std::string algorithms[] = {"Selection Sort", "Insertion Sort", "Bubble Sort", "Merge Sort", "Quick Sort"};
+  std::string algorithms[] = {"Selection Sort", "Insertion Sort", "Bubble Sort", "Merge Sort", "Quick Sort", "Shuffle"};
   int ch, i, width = 14;
   WINDOW * menu = newwin( 10, 20, 1, 1 );
   box(menu, 0, 0);
-  for(i = 0; i < 5; i++) {
+  for(i = 0; i < 6; i++) {
     if( i == 0 ) 
       wattron(menu, A_STANDOUT);
     else
@@ -169,11 +175,11 @@ int main() {
     case KEY_UP:
       i--;
       if(i < 0)
-        i = 4;
+        i = 5;
       break;
     case KEY_DOWN:
       i++;
-      if(i > 4)
+      if(i > 5)
         i = 0;
       break;
     }
@@ -220,6 +226,9 @@ int main() {
     break;
   case 4:
     quickSort(bars, 0, windowWidth - 3);
+    break;
+  case 5:
+    shuffle(bars, windowWidth - 2);
   }
 
   getch();
