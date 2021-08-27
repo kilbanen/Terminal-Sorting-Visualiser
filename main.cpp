@@ -143,6 +143,29 @@ void shuffle(Bar *bars, int size) {
     swap(&bars[rand() % size], &bars[rand() % size]);
 }
 
+int selectAlgorithm(WINDOW *menu, std::string algorithms[]) {
+  int ch, i = 0;
+  while(( ch = wgetch(menu)) != '\n'){
+    mvwprintw(menu, i+1, 2, "%s", algorithms[i].c_str());
+    switch(ch) {
+    case KEY_UP:
+      i--;
+      if(i < 0)
+        i = 5;
+      break;
+    case KEY_DOWN:
+      i++;
+      if(i > 5)
+        i = 0;
+      break;
+    }
+    wattron(menu, A_STANDOUT);
+    mvwprintw( menu, i+1, 2, "%s", algorithms[i].c_str());
+    wattroff(menu, A_STANDOUT);
+  }
+  return i;
+}
+
 int main() {
   initscr();
   curs_set(0);
@@ -169,24 +192,7 @@ int main() {
   wrefresh(menu);
   i = 0;
   keypad(menu, TRUE);
-  while(( ch = wgetch(menu)) != '\n'){
-    mvwprintw(menu, i+1, 2, "%s", algorithms[i].c_str());
-    switch(ch) {
-    case KEY_UP:
-      i--;
-      if(i < 0)
-        i = 5;
-      break;
-    case KEY_DOWN:
-      i++;
-      if(i > 5)
-        i = 0;
-      break;
-    }
-    wattron(menu, A_STANDOUT);
-    mvwprintw( menu, i+1, 2, "%s", algorithms[i].c_str());
-    wattroff(menu, A_STANDOUT);
-  }
+  int algorithmIndex = selectAlgorithm(menu, algorithms);
 
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
@@ -203,7 +209,6 @@ int main() {
   srand(time(0));
 
   Bar bars[windowWidth - 2];
-  int algorithmIndex = i;
   
   for(int i = 0; i < windowWidth - 2; i++) {
     bars[i] = Bar((rand() % (windowHeight - 2)) + 1, windowHeight - 2, windowY + windowHeight - 2 , i, windowX + 1);
@@ -230,26 +235,7 @@ int main() {
     shuffle(bars, windowWidth - 2);
   }
 
-  while(( ch = wgetch(menu)) != '\n'){
-    mvwprintw(menu, i+1, 2, "%s", algorithms[i].c_str());
-    switch(ch) {
-    case KEY_UP:
-      i--;
-      if(i < 0)
-        i = 5;
-      break;
-    case KEY_DOWN:
-      i++;
-      if(i > 5)
-        i = 0;
-      break;
-    }
-    wattron(menu, A_STANDOUT);
-    mvwprintw( menu, i+1, 2, "%s", algorithms[i].c_str());
-    wattroff(menu, A_STANDOUT);
-  }
-
-  algorithmIndex = i;
+  algorithmIndex = selectAlgorithm(menu, algorithms);
 
   switch(algorithmIndex) {
   case 0:
