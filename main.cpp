@@ -166,6 +166,28 @@ int selectAlgorithm(WINDOW *menu, std::string algorithms[]) {
   return i;
 }
 
+void runAlgorithm(int algorithmIndex, Bar* bars, int size) {
+  switch(algorithmIndex) {
+  case 0:
+    selectionSort(bars, size);
+    break;
+  case 1:
+    insertionSort(bars, size);
+    break;
+  case 2:
+    bubbleSort(bars, size);
+    break;
+  case 3:
+    mergeSort(bars, 0, size - 1);
+    break;
+  case 4:
+    quickSort(bars, 0, size - 1);
+    break;
+  case 5:
+    shuffle(bars, size);
+  }
+}
+
 int main() {
   initscr();
   curs_set(0);
@@ -192,7 +214,7 @@ int main() {
   wrefresh(menu);
   i = 0;
   keypad(menu, TRUE);
-  int algorithmIndex = selectAlgorithm(menu, algorithms);
+  int algorithmIndex;
 
   int yMax, xMax;
   getmaxyx(stdscr, yMax, xMax);
@@ -215,46 +237,10 @@ int main() {
     bars[i].draw();
   }
 
-  switch(algorithmIndex) {
-  case 0:
-    selectionSort(bars, windowWidth - 2);
-    break;
-  case 1:
-    insertionSort(bars, windowWidth - 2);
-    break;
-  case 2:
-    bubbleSort(bars, windowWidth - 2);
-    break;
-  case 3:
-    mergeSort(bars, 0, windowWidth - 3);
-    break;
-  case 4:
-    quickSort(bars, 0, windowWidth - 3);
-    break;
-  case 5:
-    shuffle(bars, windowWidth - 2);
-  }
 
-  algorithmIndex = selectAlgorithm(menu, algorithms);
-
-  switch(algorithmIndex) {
-  case 0:
-    selectionSort(bars, windowWidth - 2);
-    break;
-  case 1:
-    insertionSort(bars, windowWidth - 2);
-    break;
-  case 2:
-    bubbleSort(bars, windowWidth - 2);
-    break;
-  case 3:
-    mergeSort(bars, 0, windowWidth - 3);
-    break;
-  case 4:
-    quickSort(bars, 0, windowWidth - 3);
-    break;
-  case 5:
-    shuffle(bars, windowWidth - 2);
+  while(true) {
+    algorithmIndex = selectAlgorithm(menu, algorithms);
+    runAlgorithm(algorithmIndex, bars, windowWidth - 2);
   }
 
   getch();
