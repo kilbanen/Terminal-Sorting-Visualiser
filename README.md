@@ -1,4 +1,4 @@
-#Terminal Sorting Visualiser
+# Terminal Sorting Visualiser
 A termial-based application for looking at different sorting algorithms
 
 ## To build:

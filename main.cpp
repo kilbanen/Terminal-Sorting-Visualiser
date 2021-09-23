@@ -237,7 +237,6 @@ int main() {
     bars[i].draw();
   }
 
-
   while(true) {
     algorithmIndex = selectAlgorithm(menu, algorithms);
     runAlgorithm(algorithmIndex, bars, windowWidth - 2);
