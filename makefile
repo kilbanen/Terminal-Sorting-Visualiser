@@ -1,2 +1,2 @@
-main: main.cpp
-	g++ -g -lncurses -o main main.cpp
+main: main.c
+	gcc -g -lncurses -o main main.c

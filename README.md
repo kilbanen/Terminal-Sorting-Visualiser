@@ -1,5 +1,5 @@
 # Terminal Sorting Visualiser
-A termial-based application for looking at different sorting algorithms
+A terminal-based application for looking at different sorting algorithms.
 
 ## To build:
 ```

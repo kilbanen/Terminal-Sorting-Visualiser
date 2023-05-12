@@ -1,7 +1,7 @@
 #include <ncurses.h>
-#include <ctime>
-#include <cstdlib>
-#include <string>
+#include <time.h>
+#include <stdlib.h>
+#include <string.h>
 #include "bar.h"
 
 void swap(Bar *a, Bar *b) {
@@ -13,22 +13,22 @@ void swap(Bar *a, Bar *b) {
   b->xPos = temp.xPos;
   int oldAColour = a->colour;
   int oldBColour = b->colour;
-  a->draw(3);
-  b->draw(3);
+  draw(*a, 3);
+  draw(*b, 3);
   getch();
-  a->draw(oldBColour);
-  b->draw(oldAColour);
+  draw(*a, oldBColour);
+  draw(*b, oldAColour);
 }
 
 int isLessThan(Bar *a, Bar *b) {
   int oldAColour = a->colour;
   int oldBColour = b->colour;
-  b->draw(3);
+  draw(*b, 3);
   getch();
-  a->draw(3);
+  draw(*a, 3);
   getch();
-  a->draw(oldAColour);
-  b->draw(oldBColour);
+  draw(*a, oldAColour);
+  draw(*b, oldBColour);
   if(a->height < b->height)
     return 1;
   return 0;
@@ -43,18 +43,18 @@ void selectionSort(Bar *bars, int size) {
     }
     if(min != i)
       swap(&bars[min], &bars[i]);
-    bars[i].draw(2);
+    draw(bars[i], 2);
   }
 }
 
 void insertionSort(Bar *bars, int size) {
   for(int i = 1; i < size; i++) {
-    bars[i].draw(2);
+    draw(bars[i], 2);
     int j;
     for(j = i; j > 0 && isLessThan(&bars[j], &bars[j - 1]); j--) {
       swap(&bars[j], &bars[j - 1]);
     }
-    bars[i].draw(1);
+    draw(bars[i], 1);
   }
 }
 
@@ -74,9 +74,9 @@ void merge(Bar *bars, int low, int mid, int high) {
   int j = mid + 1;
   int k = 0;
 
-  bars[i].draw(2);
-  bars[j].draw(4);
-  bars[high].draw(2);
+  draw(bars[i], 2);
+  draw(bars[j], 4);
+  draw(bars[high], 2);
 
   while(i <= mid && j <= high) {
     if(isLessThan(&bars[i], &bars[j]))
@@ -96,14 +96,14 @@ void merge(Bar *bars, int low, int mid, int high) {
     bars[i] = aux[i - low];
     bars[i].xPos = i;
     if(i == low || i == high)
-      bars[i].draw(2);
+      draw(bars[i], 2);
     else
-      bars[i].draw(1);
+      draw(bars[i], 1);
     getch();
   }
 
-  bars[low].draw(1);
-  bars[high].draw(1);
+  draw(bars[low], 1);
+  draw(bars[high], 1);
 }
 
 void mergeSort(Bar *bars, int low, int high) {
@@ -143,10 +143,10 @@ void shuffle(Bar *bars, int size) {
     swap(&bars[rand() % size], &bars[rand() % size]);
 }
 
-int selectAlgorithm(WINDOW *menu, std::string algorithms[]) {
+int selectAlgorithm(WINDOW *menu, char *algorithms[]) {
   int ch, i = 0;
   while(( ch = wgetch(menu)) != '\n'){
-    mvwprintw(menu, i+1, 2, "%s", algorithms[i].c_str());
+    mvwprintw(menu, i+1, 2, "%s", algorithms[i]);
     switch(ch) {
     case KEY_UP:
       i--;
@@ -160,7 +160,7 @@ int selectAlgorithm(WINDOW *menu, std::string algorithms[]) {
       break;
     }
     wattron(menu, A_STANDOUT);
-    mvwprintw( menu, i+1, 2, "%s", algorithms[i].c_str());
+    mvwprintw( menu, i+1, 2, "%s", algorithms[i]);
     wattroff(menu, A_STANDOUT);
   }
   return i;
@@ -199,7 +199,7 @@ int main() {
   init_pair(3, COLOR_BLACK, COLOR_RED);
   init_pair(4, COLOR_BLACK, COLOR_CYAN);
 
-  std::string algorithms[] = {"Selection Sort", "Insertion Sort", "Bubble Sort", "Merge Sort", "Quick Sort", "Shuffle"};
+  char *algorithms[] = {"Selection Sort", "Insertion Sort", "Bubble Sort", "Merge Sort", "Quick Sort", "Shuffle"};
   int ch, i, width = 14;
   WINDOW * menu = newwin( 10, 20, 1, 1 );
   box(menu, 0, 0);
@@ -208,7 +208,7 @@ int main() {
       wattron(menu, A_STANDOUT);
     else
       wattroff(menu, A_STANDOUT);
-    mvwprintw(menu, i+1, 2, "%s", algorithms[i].c_str());
+    mvwprintw(menu, i+1, 2, "%s", algorithms[i]);
   }
   refresh();
   wrefresh(menu);
@@ -233,8 +233,13 @@ int main() {
   Bar bars[windowWidth - 2];
   
   for(int i = 0; i < windowWidth - 2; i++) {
-    bars[i] = Bar((rand() % (windowHeight - 2)) + 1, windowHeight - 2, windowY + windowHeight - 2 , i, windowX + 1);
-    bars[i].draw();
+    bars[i].height = (rand() % (windowHeight - 2)) + 1;
+    bars[i].maxHeight = windowHeight - 2;
+    bars[i].yPos = windowY + windowHeight - 2;
+    bars[i].xPos = i;
+    bars[i].xOffset = windowX + 1;
+    bars[i].colour = 1;
+    draw(bars[i], 1);
   }
 
   while(true) {
